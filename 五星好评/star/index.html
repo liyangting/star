@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>star</title>
+    <style>
+        img {
+            width: 10%;
+            height: 3%;
+        }
+        #star {
+            display: flex;
+            justify-content: center;
+            margin-top: 20%;
+            align-items: flex-end;
+        }
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="star">
+        <img
+        @click="starItem(i)"
+        @mouseover="overStar(i)"
+        @mouseout="outStar(i)"
+        :src="`./img/${mouseIndex < i ? 'normstar' : 'starimg' }.png`" 
+        v-for="(n, i) in 5"
+        :key="i"
+      />
+      <span style="flex: 1;margin-left: 5%;">{{ evaArr[ mouseIndex ] }}</span>
+    </div>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    new Vue({
+        el:'#star',
+        data:{
+            evaArr: ['一星', '二星', '三星', '四星', '五星'],
+            tabIndex:0,
+            starIndex:-1,
+            mouseIndex:-1
+        },
+        mounted(){},
+        methods:{
+            overStar(i){
+                this.mouseIndex = i
+            },
+            starItem(i){
+                this.starIndex = i
+                this.mouseIndex = this.starIndex
+                console.log(this.mouseIndex)
+            },
+            outStar(i){
+                this.mouseIndex = this.starIndex
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		.wrap {
+			display: flex;
+		}
+		.item {
+			font-size: 40px;
+			padding-right: 5px;
+			color: gold;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<div class="wrap">
+				<div
+				v-for="(item,index) in starArr" 
+				:key="index" class="item" 
+				@mouseover="onMouseover(index)"
+				@mouseout="onMouseout"
+				@click="onClick(item,index)"
+				>
+					{{ item.star }}
+				</div>
+			</div>
+			<div class="text" v-if="chooseIdx > -1">
+				{{chooseIdx | formatIdx}}星好评
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script type="text/javascript">
+			const H_STAR = '☆';
+			const S_STAR = '★';
+			let vm = new Vue({
+				el:'#app',
+				data:{
+					starArr: [
+						{
+							star: H_STAR
+						},
+						{
+							star: H_STAR
+						},
+						{
+							star: H_STAR
+						},
+						{
+							star: H_STAR
+						},
+						{
+							star: H_STAR
+						}
+					],
+					chooseIdx:-1
+				},
+				filters: {
+					formatIdx (val) {
+						let value;
+						switch (val) {
+							case 0:
+								value = '一'
+								break;
+							case 1:
+								value = '二'
+								break;
+							case 2:
+								value = '三'
+								break;	
+							case 3:
+								value = '四'
+								break;	 
+							case 4:
+								value = '五'
+								break;	
+						}
+						return value
+					}
+				},
+				methods: {
+					onMouseover (idx) {
+						this.starArr.filter((item,index) => {
+							if (index < idx || index === idx) {
+								item.star = S_STAR
+							}else {
+								item.star = H_STAR
+							}
+						})
+					},
+					onMouseout () {
+						this.starArr.map((item,index) => {
+							if (this.isChoose) {
+								if (index < this.chooseIdx || index === this.chooseIdx) {
+									item.star = S_STAR
+								}else {
+									item.star = H_STAR
+								}
+							} else {
+								item.star = H_STAR
+							}
+							
+						})
+					},
+					onClick (cur,idx) {
+						this.isChoose = true
+						this.chooseIdx = idx
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
